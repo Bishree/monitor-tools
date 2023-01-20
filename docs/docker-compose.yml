@@ -16,10 +16,15 @@ services:
   grafana:
     image: grafana/grafana-oss:latest
     container_name: grafana
+    environment:
+      - GF_SMTP_ENABLED=true
+      - GF_SMTP_HOST=example.com
+      - GF_SMTP_USER=youremail@gmail.com
+      - GF_SMTP_PASSWORD=yourpassword
     ports:
       - "3000:3000"
     volumes:
-      - grafana-data:/var/lib/grafana
+      - /etc/grafana-data:/var/lib/grafana
     restart: unless-stopped
 
   portainer:
@@ -70,8 +75,8 @@ services:
       - '/:/host:ro,rslave'
 
 volumes:
-  grafana-data:
-    driver: local
+#  grafana-data:
+#    driver: local
   prometheus-data:
     driver: local
   portainer-data:
